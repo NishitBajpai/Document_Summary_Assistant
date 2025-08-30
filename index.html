@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Document Summary Assistant</title>
+  <meta name="description" content="Upload a PDF or image, extract text (PDF parsing / OCR), and generate smart summaries." />
+  <link rel="stylesheet" href="style.css" />
+  <!-- PDF.js & Tesseract.js via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js" defer></script>
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <span class="logo">📝</span>
+      <h1>Document Summary Assistant</h1>
+    </div>
+    <div class="byline">PDF & Image → Text → Smart Summary</div>
+  </header>
+
+  <main class="container">
+    <section class="uploader">
+      <div id="dropzone" class="dropzone" tabindex="0" aria-label="Drag and drop files here">
+        <p><strong>Drag & drop</strong> a PDF or image here, or</p>
+        <label class="btn">
+          <input type="file" id="fileInput" accept=".pdf,image/*" hidden />
+          Choose file
+        </label>
+        <p class="hint">Supported: .pdf, .png, .jpg, .jpeg, .webp</p>
+      </div>
+      <div id="fileMeta" class="file-meta hidden"></div>
+      <div id="loader" class="loader hidden">
+        <div class="spinner" aria-hidden="true"></div>
+        <div>
+          <div id="loaderText">Processing…</div>
+          <div id="progressWrap" class="progress-wrap hidden">
+            <div id="progressBar" class="progress-bar" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+      <div id="error" class="error hidden" role="alert"></div>
+    </section>
+
+    <section class="controls">
+      <div class="control">
+        <label for="summaryLength">Summary length</label>
+        <select id="summaryLength">
+          <option value="short">Short</option>
+          <option value="medium" selected>Medium</option>
+          <option value="long">Long</option>
+        </select>
+      </div>
+      <div class="control">
++        <label for="includeBullets">
+          <input type="checkbox" id="includeBullets" checked />
+          Highlight key points
+        </label>
+      </div>
+      <div class="control">
+        <label for="includeKeywords">
+          <input type="checkbox" id="includeKeywords" checked />
+          Extract keywords
+        </label>
+      </div>
+      <div class="control">
+        <label for="includeSuggestions">
+          <input type="checkbox" id="includeSuggestions" checked />
+          Improvement suggestions
+        </label>
+      </div>
+      <div class="actions">
+        <button id="btnSummarize" class="btn primary" disabled>Generate Summary</button>
+        <button id="btnDownload" class="btn" disabled>Download .txt</button>
+        <button id="btnCopy" class="btn" disabled>Copy</button>
+        <button id="btnReset" class="btn">Reset</button>
+      </div>
+    </section>
+
+    <section class="panels">
+      <div class="panel">
+        <h2>Extracted Text</h2>
+        <textarea id="extractedText" placeholder="Your extracted text will appear here…" spellcheck="false"></textarea>
+      </div>
+      <div class="panel">
+        <h2>Summary</h2>
+        <div id="summaryOutput" class="output"></div>
+      </div>
+    </section>
+  </main>
+
+  
+  <footer class="footer">
+    <div>
+      Built with <a href="https://mozilla.github.io/pdf.js/" target="_blank" rel="noreferrer">PDF.js</a> and
+      <a href="https://tesseract.projectnaptha.com/" target="_blank" rel="noreferrer">Tesseract.js</a>. No server required.
+    </div>
+    <div class="tiny">© 2025 — Document Summary Assistant</div>
+  </footer>
+</body>
+</html>
